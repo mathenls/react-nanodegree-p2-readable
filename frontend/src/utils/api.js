@@ -1,14 +1,13 @@
-const localServerAddress = 'http://localhost:3001'
+import * as data from './api_config.json'
+const localServerAddress = data.localServerAddress
+const endpoints = data.initialDataEndPoints
 const headers = {
-    'Authorization': Math.random() * 1000,
+    'Authorization': data.authorizationToken,
     'Content-Type': 'application/json'
 }
 
+
 export async function getInitialData() {
-    const endpoints = [
-        'categories',
-        'posts'
-    ]
     const promisesArray = endpoints.map(async (endpoint) => {
         return (await fetch(`${localServerAddress}/${endpoint}`,{
             headers: headers

@@ -1,0 +1,8 @@
+{
+    "localServerAddress": "http://localhost:3001",
+    "initialDataEndPoints": [
+        "categories",
+        "posts"
+    ],
+    "authorizationToken": "7355608"
+}
