@@ -1,5 +1,5 @@
 import {
-    RECEIVE_POSTS
+    RECEIVE_POSTS, VOTE_ON_POST
 } from '../actions/posts'
 
 const initialState = {
@@ -12,6 +12,13 @@ export default function posts(state = initialState, action) {
             return {
                 ...state,
                 listOfPosts: action.posts
+            }
+        case VOTE_ON_POST:
+            const postIndex = state.listOfPosts.findIndex(post => post.id === action.id)
+            const voteScore = state.listOfPosts[postIndex].voteScore
+            state.listOfPosts[postIndex].voteScore = action.option === 'upVote' ? voteScore + 1 : voteScore - 1
+            return {
+                ...state
             }
 
         default:

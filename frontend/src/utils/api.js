@@ -1,13 +1,14 @@
+const localServerAddress = 'http://localhost:3001'
+const headers = {
+    'Authorization': Math.random() * 1000,
+    'Content-Type': 'application/json'
+}
+
 export async function getInitialData() {
-    const localServerAddress = 'http://localhost:3001'
     const endpoints = [
         'categories',
         'posts'
     ]
-    const headers = {
-        'Authorization': Math.random() * 1000
-    }
-
     const promisesArray = endpoints.map(async (endpoint) => {
         return (await fetch(`${localServerAddress}/${endpoint}`,{
             headers: headers
@@ -21,4 +22,12 @@ export async function getInitialData() {
                 posts: responses[1]
             }
         })
+}
+
+export async function saveVoteOnPost(id, option) {
+    return (await fetch(`${localServerAddress}/posts/${id}`,{
+        headers: headers,
+        method: 'POST',
+        body: JSON.stringify({id, option})
+    })).json()
 }
