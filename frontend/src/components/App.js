@@ -4,11 +4,13 @@ import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import LoadingBar from 'react-redux-loading'
 import Nav from './Nav'
-import PostsContainer from './PostsContainer';
+import PostsContainer from './PostsContainer'
+import PostDetails from './PostDetails'
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData())
   }
+
   render() {
     return (
       <Router>
@@ -19,8 +21,9 @@ class App extends Component {
               ? null
               : <React.Fragment>
                   <Nav />
-                  <Route path='/' exact component={PostsContainer} />
-                  <Route path='/:category' render={(props) => <PostsContainer {...props} />} />
+                  <Route exact path='/' component={PostsContainer} />
+                  <Route exact path='/:category' render={(props) => <PostsContainer {...props} />} />
+                  <Route exact path='/:category/:id' render={(props) => <PostDetails {...props} />} />
                 </React.Fragment>
             }
           </div>
@@ -30,7 +33,7 @@ class App extends Component {
   }
 }
 
-function mapStateToProps ({ loading, categories }) {
+function mapStateToProps ({ categories }) {
   return {
     loading: categories.length === 0
   }

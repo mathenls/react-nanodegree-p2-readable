@@ -16,7 +16,9 @@ export default function posts(state = initialState, action) {
         case VOTE_ON_POST:
             const postIndex = state.listOfPosts.findIndex(post => post.id === action.id)
             const voteScore = state.listOfPosts[postIndex].voteScore
-            state.listOfPosts[postIndex].voteScore = action.option === 'upVote' ? voteScore + 1 : voteScore - 1
+            state.listOfPosts[postIndex].voteScore = action.option === 'upVote'
+                ? voteScore + 1
+                : voteScore - 1
             return {
                 ...state
             }

@@ -19,7 +19,7 @@ class Nav extends React.Component {
             </Menu.Item>
             {listOfCategories.map((c) => (
                 <Menu.Item key={c.path}>
-                    <NavLink to={c.path} exact activeClassName='active'>
+                    <NavLink to={`/${c.path}`} exact activeClassName='active'>
                         {c.name}
                     </NavLink>
                 </Menu.Item>

@@ -1,10 +1,16 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { Card, Icon } from 'antd'
+import { Card, Icon, Tag } from 'antd'
+import { Typography } from 'antd';
+
+const { Title } = Typography
 
 const PostCard = styled(Card)`
     background-color: #FEFEFE;
     margin: 24px;
+    width: 100%;
+    transform: translate(25%, 25%);
 `
 
 const PostIcon = styled(Icon)`
@@ -12,24 +18,18 @@ const PostIcon = styled(Icon)`
     margin-left: 4px;
 `
 
-const CategoryHeader = styled.h2`
-    font-weight: bold;
-    display: inline;
-`
-
 const Post = (props) => {
     const { post, handleUpvote, handleDownvote } = props
+
+
     return (
         <PostCard
-            title={post.title}
-            extra={post.author}
-            style={{ width: 400 }}
             key={post.id}
         >
-            <div>
-                <PostIcon type="folder" />
-                <CategoryHeader>{post.category}</CategoryHeader>
-            </div>
+            <Tag color="blue">{post.category}</Tag>
+            <Link to={`/${post.category}/${post.id}`}>
+                <Title level={4}>{post.title}</Title>
+            </Link>
             <span>
                 {post.voteScore}
                 <PostIcon type="like" theme="filled" onClick={() => handleUpvote(post.id)} />

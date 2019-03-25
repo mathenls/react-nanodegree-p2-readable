@@ -7,8 +7,16 @@ import Post from './Post'
 
 const Container = styled.div`
     padding: 24px;
-    background-color: #FEFEFE;
+    background-color: #e9ebee;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 `
+
+const CenteredRow = styled(Row)`
+    width: 50%;
+`
+
 
 class PostsContainer extends React.Component {
   handleUpvote = (id) => {
@@ -29,11 +37,11 @@ class PostsContainer extends React.Component {
       return (
         <Container>
             {listOfPosts.map((post) => (
-                <Row gutter={16}>
+                <CenteredRow gutter={24}>
                     <Col span={16}>
                         <Post post={post} handleDownvote={this.handleDownvote} handleUpvote={this.handleUpvote} />
                     </Col>
-                </Row>
+                </CenteredRow>
             ))}
         </Container>
       )
