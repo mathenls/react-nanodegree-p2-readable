@@ -1,12 +1,12 @@
 import {
-    RECEIVE_POSTS, VOTE_ON_POST
+    RECEIVE_POSTS, VOTE_ON_POST, FETCH_POST
 } from '../actions/posts'
 
 const initialState = {
     listOfPosts: []
 }
 
-export default function posts(state = initialState, action) {
+export function posts(state = initialState, action) {
     switch (action.type) {
         case RECEIVE_POSTS:
             return {
@@ -23,6 +23,22 @@ export default function posts(state = initialState, action) {
                 ...state
             }
 
+        default:
+            return state
+    }
+}
+
+export function post(state = {}, action) {
+    switch (action.type) {
+        case FETCH_POST:
+            return {...action.post}
+        case VOTE_ON_POST: {
+            const post = {...state}
+            return {
+                ...post, 
+                voteScore: action.option === 'upVote' ? post.voteScore + 1 : post.voteScore - 1
+            }
+        }
         default:
             return state
     }

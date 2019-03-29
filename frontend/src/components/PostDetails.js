@@ -1,52 +1,58 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Card, Icon, Tag } from 'antd'
-import { Typography } from 'antd';
+import CommentList from './CommentList'
+import { fetchPost, handleVoteOnPost } from '../actions/posts'
+import { fetchPostComments, dismissComments } from '../actions/comments'
+import Post from './Post'
 
-const { Title } = Typography
-
-const PostCard = styled(Card)`
-    background-color: #FEFEFE;
-    margin: 24px;
-    width: 100%;
-    transform: translate(25%, 25%);
-
-`
-const PostIcon = styled(Icon)`
-    font-size: 16px;
-    margin-left: 4px;
+const Container = styled.div`
+    padding: 24px;
+    background-color: #e9ebee;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 `
 
 class PostDetails extends Component {
+    
+    componentDidMount() {
+        const { dispatch, match } = this.props
+        dispatch(fetchPost(match.params.id))
+        dispatch(fetchPostComments(match.params.id))
+    }
+
+    componentWillUnmount() {
+        this.props.dispatch(dismissComments())
+    }
+
+    handleUpvote = (id) => {
+        this.props.dispatch(handleVoteOnPost(id, 'upVote'))
+    }
+
+    handleDownvote = (id) => {
+      this.props.dispatch(handleVoteOnPost(id, 'downVote'))
+    }
+
     render() {
-        const { posts, match } = this.props
-        const { listOfPosts } = posts
-        const post = listOfPosts.find(p => p.id === match.params.id)
+        const { post, comments } = this.props
 
         return (
-            <PostCard
-                key={post.id}
-            >
-                <Link to={`/${post.category}/${post.id}`}>
-                    <Tag color="blue">{post.category}</Tag>
-                    <Title level={4}>{post.title}</Title>
-                </Link>
-                <div>
-                    {post.body}
-                </div>
-                <span>
-                    <PostIcon type="message" /> {post.commentCount}
-                </span>
-            </PostCard>
+            <Container>
+                <Post post={post} handleDownvote={this.handleDownvote} handleUpvote={this.handleUpvote} isDetails={true} />
+                <h2><b>Comments</b> ({comments.length})</h2>
+                {comments.length > 0 && 
+                    <CommentList comments={comments} />
+                }
+            </Container>
         )
     }
 }
 
-function mapStateToProps ({ posts }) {
+function mapStateToProps ({ post, comments }) {
     return {
-        posts
+        post,
+        comments
     }
 }
 

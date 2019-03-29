@@ -11,10 +11,16 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
+    width: 100%;
 `
 
 const CenteredRow = styled(Row)`
-    width: 50%;
+    width: 100%;
+`
+
+const CenteredCol= styled(Col)`
+    display: flex;
+    justify-content: center;
 `
 
 
@@ -38,9 +44,9 @@ class PostsContainer extends React.Component {
         <Container>
             {listOfPosts.map((post) => (
                 <CenteredRow gutter={24}>
-                    <Col span={16}>
+                    <CenteredCol span={24}>
                         <Post post={post} handleDownvote={this.handleDownvote} handleUpvote={this.handleUpvote} />
-                    </Col>
+                    </CenteredCol>
                 </CenteredRow>
             ))}
         </Container>

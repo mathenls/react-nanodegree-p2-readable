@@ -9,34 +9,44 @@ const { Title } = Typography
 const PostCard = styled(Card)`
     background-color: #FEFEFE;
     margin: 24px;
-    width: 100%;
-    transform: translate(25%, 25%);
+    width: 50%;
 `
-
 const PostIcon = styled(Icon)`
-    font-size: 16px;
-    margin-left: 4px;
+    font-size: 18px;
+    margin: 6px;
+`
+const VoteScore = styled.span`
+    font-size: 18px;
+    margin: 6px;
+`
+const BodyContainer = styled.div`
+    min-height: 40px;
+    text-align: left;
+    font-size: 14px;
+    vertical-align: baseline;
+    margin: 12px 12px 12px 0px;
 `
 
 const Post = (props) => {
-    const { post, handleUpvote, handleDownvote } = props
-
+    const { post, handleUpvote, handleDownvote, isDetails } = props
+    const { id, category, title, body, author, timestamp, commentCount, voteScore } = post
 
     return (
         <PostCard
-            key={post.id}
+            key={id}
         >
-            <Tag color="blue">{post.category}</Tag>
-            <Link to={`/${post.category}/${post.id}`}>
-                <Title level={4}>{post.title}</Title>
+            <Tag color="blue">{category}</Tag>
+            <Link to={`/${category}/${id}`}>
+                <Title level={4}>{title}</Title>
             </Link>
+            {isDetails && (
+                <BodyContainer>{body}</BodyContainer>
+            )}
             <span>
-                {post.voteScore}
-                <PostIcon type="like" theme="filled" onClick={() => handleUpvote(post.id)} />
-                <PostIcon type="dislike" theme="filled" onClick={() => handleDownvote(post.id)}  />
-            </span>
-            <span>
-                <PostIcon type="message" /> {post.commentCount}
+                <PostIcon type="like" theme="filled" onClick={() => handleUpvote(id)} />
+                <VoteScore>{voteScore}</VoteScore>
+                <PostIcon type="dislike" theme="filled" onClick={() => handleDownvote(id)}  />
+                <PostIcon type="message" /> {commentCount}
             </span>
         </PostCard>
     )

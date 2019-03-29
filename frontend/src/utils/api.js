@@ -23,10 +23,22 @@ export async function getInitialData() {
         })
 }
 
+export async function getPost(id) {
+    return (await fetch(`${localServerAddress}/posts/${id}`, {
+        headers: headers
+    })).json()
+}
+
 export async function saveVoteOnPost(id, option) {
     return (await fetch(`${localServerAddress}/posts/${id}`,{
         headers: headers,
         method: 'POST',
         body: JSON.stringify({id, option})
+    })).json()
+}
+
+export async function getPostComments(parentId) {
+    return (await fetch(`${localServerAddress}/posts/${parentId}/comments`, {
+        headers: headers
     })).json()
 }
