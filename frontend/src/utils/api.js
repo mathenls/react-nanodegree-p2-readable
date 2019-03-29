@@ -29,6 +29,14 @@ export async function getPost(id) {
     })).json()
 }
 
+export async function deletePost(id) {
+    return (await fetch(`${localServerAddress}/posts/${id}`, {
+        headers: headers,
+        method: 'DELETE'
+    })).json()
+}
+
+
 export async function saveVoteOnPost(id, option) {
     return (await fetch(`${localServerAddress}/posts/${id}`,{
         headers: headers,

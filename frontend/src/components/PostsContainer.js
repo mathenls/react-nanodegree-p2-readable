@@ -1,12 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Row, Col, Select } from 'antd'
+import { Row, Col, Radio } from 'antd'
 import styled from 'styled-components'
-import { handleVoteOnPost } from '../actions/posts'
+import { handleVoteOnPost, handlePostDeletion } from '../actions/posts'
 import Post from './Post'
 import { orderBy } from 'lodash'
-
-const Option = Select.Option
 
 const Container = styled.div`
     padding: 24px;
@@ -40,37 +38,52 @@ class PostsContainer extends React.Component {
     this.props.dispatch(handleVoteOnPost(id, 'downVote'))
   }
 
-  handleOrderParamChange = (value) => {
+  handleDeletePost = (id) => {
+    this.props.dispatch(handlePostDeletion(id))
+  }
+
+  handleOrderParamChange = (e) => {
       this.setState({
-          orderParam: value
+          orderParam: e.target.value
       })
   }
 
   render()  {
-      const { posts, match } = this.props
-      let { listOfPosts } = posts
+      const { match } = this.props
+      let { posts } = this.props
       const { orderParam } = this.state
 
       if (match.params.category) {
-          listOfPosts = listOfPosts.filter(post => post.category === match.params.category)
+          posts = posts.filter(post => post.category === match.params.category)
       }
-      listOfPosts = orderBy(listOfPosts, [orderParam], ['desc'])
+      posts = orderBy(posts, [orderParam], ['desc']).filter(post => !post.deleted)
 
       return (
         <>
-          <Container>
-            <span>Order Posts By: </span>
-            <Select defaultValue='timestamp' style={{ width: 120 }} onChange={this.handleOrderParamChange}>
-              <Option value='timestamp'>Date</Option>
-              <Option value='voteScore'>Vote Score</Option>
-            </Select>
-            {listOfPosts.map((post) => (
-                <CenteredRow gutter={24}>
-                    <CenteredCol span={24}>
-                        <Post post={post} handleDownvote={this.handleDownvote} handleUpvote={this.handleUpvote} />
-                    </CenteredCol>
-                </CenteredRow>
-            ))}
+        <Container>
+          {posts.length > 0 ? (
+              <>
+              <span>Order Posts By: </span>
+              <Radio.Group value={orderParam} onChange={this.handleOrderParamChange}>
+                <Radio.Button value="timestamp">Posted Date</Radio.Button>
+                <Radio.Button value="voteScore">Vote Score</Radio.Button>
+              </Radio.Group>
+              {posts.map((post) => (
+                  <CenteredRow gutter={24}>
+                      <CenteredCol span={24}>
+                          <Post 
+                            post={post} 
+                            handleDownvote={this.handleDownvote} 
+                            handleUpvote={this.handleUpvote} 
+                            handleDeletePost={this.handleDeletePost}
+                          />
+                      </CenteredCol>
+                  </CenteredRow>
+              ))}
+            </>
+          ) : (
+            <h2>No posts {match.params.category && `about ${match.params.category} `} yet. :(</h2>
+          )}
           </Container>
         </>
       )

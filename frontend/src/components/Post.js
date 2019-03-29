@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { Card, Icon, Tag, Typography, Tooltip } from 'antd'
+import { deletePostById } from '../actions/posts'
+import { Card, Icon, Tag, Typography, Tooltip, Button } from 'antd'
 import moment from 'moment'
 
 const { Title } = Typography
@@ -27,9 +28,8 @@ const BodyContainer = styled.div`
     vertical-align: baseline;
     margin: 12px 12px 12px 0px;
 `
-
 const Post = (props) => {
-    const { post, handleUpvote, handleDownvote, isDetails } = props
+    const { post, handleUpvote, handleDownvote, handleDeletePost, isDetails } = props
     const { id, category, title, body, author, timestamp, commentCount, voteScore } = post
 
     return (
@@ -43,7 +43,10 @@ const Post = (props) => {
             <Link to={`/${category}/${id}`}>
                 <Title level={4}>{title}</Title>
             </Link>
-
+            <div>
+                <Button type="danger" shape="circle" icon="delete" onClick={() => handleDeletePost(id)} />
+            </div>
+         
             {isDetails && (
                 <BodyContainer>{body}</BodyContainer>
             )}
