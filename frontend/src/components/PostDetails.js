@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import CommentList from './CommentList'
 import { fetchPost, handleVoteOnPost } from '../actions/posts'
-import { fetchPostComments, dismissComments } from '../actions/comments'
+import { fetchPostComments, dismissComments, handleVoteOnComment } from '../actions/comments'
 import Post from './Post'
 
 const Container = styled.div`
@@ -26,12 +26,20 @@ class PostDetails extends Component {
         this.props.dispatch(dismissComments())
     }
 
-    handleUpvote = (id) => {
+    handlePostUpVote = (id) => {
         this.props.dispatch(handleVoteOnPost(id, 'upVote'))
     }
 
-    handleDownvote = (id) => {
+    handlePostDownVote = (id) => {
       this.props.dispatch(handleVoteOnPost(id, 'downVote'))
+    }
+
+    handleCommentUpVote = (id) => {
+        this.props.dispatch(handleVoteOnComment(id, 'upVote'))
+    }
+
+    handleCommentDownVote = (id) => {
+      this.props.dispatch(handleVoteOnComment(id, 'downVote'))
     }
 
     render() {
@@ -39,10 +47,19 @@ class PostDetails extends Component {
 
         return (
             <Container>
-                <Post post={post} handleDownvote={this.handleDownvote} handleUpvote={this.handleUpvote} isDetails={true} />
+                <Post 
+                    post={post} 
+                    handleDownvote={this.handlePostDownVote} 
+                    handleUpvote={this.handlePostUpVote} 
+                    isDetails={true} 
+                />
                 <h2><b>Comments</b> ({comments.length})</h2>
                 {comments.length > 0 && 
-                    <CommentList comments={comments} />
+                    <CommentList 
+                        comments={comments} 
+                        handleUpVote={this.handleCommentUpVote} 
+                        handleDownVote={this.handleCommentDownVote}
+                    />
                 }
             </Container>
         )

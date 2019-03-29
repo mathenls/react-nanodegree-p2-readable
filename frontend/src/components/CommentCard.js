@@ -11,8 +11,8 @@ const CommentContainer = styled(Card)`
 `
 
 const CommentCard = (props) => {
-    const { comment, handleUpvote, handleDownvote } = props
-    const { author, body, timestamp, voteScore } = comment
+    const { comment, handleUpVote, handleDownVote } = props
+    const { id, author, body, timestamp, voteScore } = comment
 
     const actions = [
         <span>
@@ -20,7 +20,7 @@ const CommentCard = (props) => {
             <Icon
               type='like'
               theme='filled'
-              onClick={handleUpvote}
+              onClick={() => handleUpVote(id)}
             />
           </Tooltip>
           <span style={{ paddingLeft: 8, cursor: 'auto' }}>
@@ -32,7 +32,7 @@ const CommentCard = (props) => {
             <Icon
               type='dislike'
               theme='filled'
-              onClick={handleDownvote}
+              onClick={() => handleDownVote(id)}
             />
           </Tooltip>
         </span>

@@ -42,3 +42,11 @@ export async function getPostComments(parentId) {
         headers: headers
     })).json()
 }
+
+export async function saveVoteOnComments(id, option) {
+    return (await fetch(`${localServerAddress}/comments/${id}`,{
+        headers: headers,
+        method: 'POST',
+        body: JSON.stringify({id, option})
+    })).json()
+}

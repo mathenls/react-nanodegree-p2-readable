@@ -7,7 +7,6 @@ const CommentListContainer = styled(List)`
     width: 50%;
 `
 
-
 const CommentList = (props) => (
     <CommentListContainer
         itemLayout="horizontal"
@@ -15,6 +14,8 @@ const CommentList = (props) => (
         renderItem={item => (
             <CommentCard
                 comment={item}
+                handleUpVote={props.handleUpVote}
+                handleDownVote={props.handleDownVote}
             />
         )}
     />
