@@ -9,7 +9,6 @@ export function comments(state = {}, action) {
         case DISMISS_COMMENTS:
             return []
         case VOTE_ON_COMMENT:
-            console.log(state)
             const commentIndex = state.findIndex(comment => comment.id === action.id)
             const voteScore = state[commentIndex].voteScore
             state[commentIndex].voteScore = action.option === 'upVote'

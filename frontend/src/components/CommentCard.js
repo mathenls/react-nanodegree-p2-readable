@@ -8,6 +8,7 @@ const CommentContainer = styled(Card)`
     width: 100%;
     height: 150px;
     margin-top: 24px;
+    box-shadow: 0 0 6px 2px rgba(0,0,0,0.18) !important;
 `
 
 const CommentCard = (props) => {

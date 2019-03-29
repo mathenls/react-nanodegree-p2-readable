@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { Card, Icon, Tag } from 'antd'
-import { Typography } from 'antd';
+import { Card, Icon, Tag, Typography, Tooltip } from 'antd'
+import moment from 'moment'
 
 const { Title } = Typography
 
@@ -10,6 +10,7 @@ const PostCard = styled(Card)`
     background-color: #FEFEFE;
     margin: 24px;
     width: 50%;
+    box-shadow: 0 0 10px 2px rgba(0,0,0,0.18) !important;
 `
 const PostIcon = styled(Icon)`
     font-size: 18px;
@@ -36,9 +37,13 @@ const Post = (props) => {
             key={id}
         >
             <Tag color="blue">{category}</Tag>
+            <Tooltip title={moment(timestamp).format('DD/MM/YYYY HH:mm:ss')}>
+                <span>{moment(timestamp).fromNow()}</span> - <b>{author}</b>
+            </Tooltip>
             <Link to={`/${category}/${id}`}>
                 <Title level={4}>{title}</Title>
             </Link>
+
             {isDetails && (
                 <BodyContainer>{body}</BodyContainer>
             )}

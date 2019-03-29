@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { Menu } from 'antd'
+import { Menu, Icon } from 'antd'
 
 class Nav extends React.Component {
   render()  {
@@ -14,7 +14,7 @@ class Nav extends React.Component {
         >
             <Menu.Item key='/'>
                 <NavLink to='/' exact activeClassName='active'>
-                    Home
+                   <Icon type='home' /> Readable
                 </NavLink>
             </Menu.Item>
             {listOfCategories.map((c) => (
