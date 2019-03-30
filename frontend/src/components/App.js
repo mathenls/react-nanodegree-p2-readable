@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import LoadingBar from 'react-redux-loading'
 import Nav from './Nav'
 import PostsContainer from './PostsContainer'
 import PostDetails from './PostDetails'
+import NewPostForm from './NewPostForm'
+
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData())
@@ -21,9 +23,12 @@ class App extends Component {
               ? null
               : <React.Fragment>
                   <Nav />
-                  <Route exact path='/' component={PostsContainer} />
-                  <Route exact path='/:category' render={(props) => <PostsContainer {...props} />} />
-                  <Route exact path='/:category/:id' render={(props) => <PostDetails {...props} />} />
+                  <Switch>
+                    <Route exact path='/' render={(props) => <PostsContainer {...props} />} />
+                    <Route exact path='/new-post' render={(props) => <NewPostForm {...props} />} />
+                    <Route exact path='/:category' render={(props) => <PostsContainer {...props} />} />
+                    <Route exact path='/:category/:id' render={(props) => <PostDetails {...props} />} />
+                  </Switch>
                 </React.Fragment>
             }
           </div>

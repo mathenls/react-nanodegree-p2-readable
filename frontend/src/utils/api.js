@@ -58,3 +58,12 @@ export async function saveVoteOnComments(id, option) {
         body: JSON.stringify({id, option})
     })).json()
 }
+
+export async function addNewPost(post) {
+    return (await fetch(`${localServerAddress}/posts`,{
+        headers: headers,
+        method: 'POST',
+        body: JSON.stringify({...post})
+    })).json()
+}
+

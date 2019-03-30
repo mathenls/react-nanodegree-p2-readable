@@ -1,5 +1,5 @@
 import {
-    RECEIVE_POSTS, VOTE_ON_POST, FETCH_POST, DELETE_POST, UNDO_DELETE_POST
+    RECEIVE_POSTS, VOTE_ON_POST, FETCH_POST, DELETE_POST, UNDO_DELETE_POST, ADD_POST, UNDO_ADD_POST
 } from '../actions/posts'
 
 
@@ -25,6 +25,10 @@ export function posts(state = [], action) {
         case UNDO_DELETE_POST:
             state[postIndex].deleted = false
             return [...state]
+        case ADD_POST:
+            return [...state, {...action.post}]
+        case UNDO_ADD_POST:
+            return state.filter(post => post.id !== action.id)
         default:
             return state
     }
@@ -37,7 +41,7 @@ export function post(state = {}, action) {
         case VOTE_ON_POST: {
             const post = {...state}
             return {
-                ...post, 
+                ...post,
                 voteScore: action.option === 'upVote' ? post.voteScore + 1 : post.voteScore - 1
             }
         }

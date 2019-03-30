@@ -1,28 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Row, Col, Radio } from 'antd'
-import styled from 'styled-components'
+import { Radio, Button } from 'antd'
 import { handleVoteOnPost, handlePostDeletion } from '../actions/posts'
 import Post from './Post'
 import { orderBy } from 'lodash'
-
-const Container = styled.div`
-    padding: 24px;
-    background-color: #e9ebee;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-`
-
-const CenteredRow = styled(Row)`
-    width: 100%;
-`
-
-const CenteredCol= styled(Col)`
-    display: flex;
-    justify-content: center;
-`
+import { Container, ActionsContainer, CenteredRow, CenteredCol, SpaceBetweenRow } from '../components/generalComponents'
 
 class PostsContainer extends React.Component {
 
@@ -62,19 +44,24 @@ class PostsContainer extends React.Component {
         <>
         <Container>
           {posts.length > 0 ? (
-              <>
-              <span>Order Posts By: </span>
-              <Radio.Group value={orderParam} onChange={this.handleOrderParamChange}>
-                <Radio.Button value="timestamp">Posted Date</Radio.Button>
-                <Radio.Button value="voteScore">Vote Score</Radio.Button>
-              </Radio.Group>
+            <>
+							<ActionsContainer>
+								<SpaceBetweenRow>
+										<span>Order Posts By: </span>
+										<Radio.Group value={orderParam} onChange={this.handleOrderParamChange}>
+											<Radio.Button value="timestamp">Posted Date</Radio.Button>
+											<Radio.Button value="voteScore">Vote Score</Radio.Button>
+										</Radio.Group>
+								</SpaceBetweenRow>
+								<Button onClick={() => this.props.history.push('/new-post')} style={{margin: '12px'}} icon="plus">New Post</Button>
+							</ActionsContainer>
               {posts.map((post) => (
                   <CenteredRow gutter={24}>
                       <CenteredCol span={24}>
-                          <Post 
-                            post={post} 
-                            handleDownvote={this.handleDownvote} 
-                            handleUpvote={this.handleUpvote} 
+                          <Post
+                            post={post}
+                            handleDownvote={this.handleDownvote}
+                            handleUpvote={this.handleUpvote}
                             handleDeletePost={this.handleDeletePost}
                           />
                       </CenteredCol>

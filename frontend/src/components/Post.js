@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { deletePostById } from '../actions/posts'
 import { Card, Icon, Tag, Typography, Tooltip, Button } from 'antd'
 import moment from 'moment'
 
@@ -43,10 +42,7 @@ const Post = (props) => {
             <Link to={`/${category}/${id}`}>
                 <Title level={4}>{title}</Title>
             </Link>
-            <div>
-                <Button type="danger" shape="circle" icon="delete" onClick={() => handleDeletePost(id)} />
-            </div>
-         
+
             {isDetails && (
                 <BodyContainer>{body}</BodyContainer>
             )}
@@ -55,6 +51,15 @@ const Post = (props) => {
                 <VoteScore>{voteScore}</VoteScore>
                 <PostIcon type="dislike" theme="filled" onClick={() => handleDownvote(id)}  />
                 <PostIcon type="message" /> {commentCount}
+                {isDetails && (
+                    <Button
+                        type="danger"
+                        style={{margin: '0 0 0 12px'}}
+                        shape="circle"
+                        icon="delete"
+                        onClick={() => handleDeletePost(id)}
+                    />
+                )}
             </span>
         </PostCard>
     )
