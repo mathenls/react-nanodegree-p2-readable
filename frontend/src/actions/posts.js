@@ -133,12 +133,12 @@ export function editPostById (id, postContent) {
 export function handleEditPost (id, postContent, previousPostContent) {
     return (dispatch) => {
       dispatch(showLoading())
-      dispatch(editPostById(id))
+      dispatch(editPostById(id, postContent))
       return editPost(id, postContent)
         .then(() => {
           dispatch(hideLoading())
         }).catch(() => {
-          dispatch(editPost(id, previousPostContent))
+          dispatch(editPostById(id, previousPostContent))
           dispatch(hideLoading())
         })
     }
