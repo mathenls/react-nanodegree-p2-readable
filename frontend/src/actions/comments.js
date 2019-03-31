@@ -1,31 +1,62 @@
-import { getPostComments, saveVoteOnComments, addCommentToPost } from '../utils/api'
+import { getPostComments, saveVoteOnComments, addCommentToPost, fetchComment, editComment } from '../utils/api'
 import { showLoading, hideLoading } from 'react-redux-loading'
+
 export const FETCH_POST_COMMENTS = 'FETCH_POST_COMMENTS'
 export const DISMISS_COMMENTS = 'DISMISS_COMMENTS'
+export const DISMISS_COMMENT = 'DISMISS_COMMENT'
 export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const UNDO_ADD_COMMENT = 'UNDO_ADD_COMMENT'
+export const FETCH_COMMENT = 'FETCH_COMMENT'
+export const EDIT_COMMENT = 'EDIT_COMMENT'
 
-export function handleFetchPostComments (comments) {
+
+export function fetchPostComments (comments) {
   return {
     type: FETCH_POST_COMMENTS,
     comments
   }
 }
 
+export function fetchCommentContent (comment) {
+  return {
+    type: FETCH_COMMENT,
+    comment
+  }
+}
+
+export function handleFetchCommentById (id) {
+  return (dispatch) => {
+    dispatch(showLoading())
+    return fetchComment(id)
+      .then((result) => {
+      dispatch(fetchCommentContent(result))
+      dispatch(hideLoading())
+    }).catch((e) => {
+      console.log(e)
+    })
+  }
+}
+
 export function dismissComments () {
     return {
-        type: DISMISS_COMMENTS,
+        type: DISMISS_COMMENTS
     }
 }
 
-export function fetchPostComments (parentId) {
+export function dismissComment () {
+  return {
+      type: DISMISS_COMMENT
+  }
+}
+
+export function handleFetchPostComments (parentId) {
   return (dispatch) => {
     dispatch(showLoading())
     return getPostComments(parentId)
       .then((comments) => {
         dispatch(hideLoading())
-        dispatch(handleFetchPostComments(comments))
+        dispatch(fetchPostComments(comments))
       })
   }
 }
@@ -88,6 +119,29 @@ export function handleAddComment (comment) {
     })
   }
 }
+
+export function editCommentById (id, commentContent) {
+  return {
+    type: EDIT_COMMENT,
+    id,
+    commentContent
+  }
+}
+
+export function handleEditComment (id, commentContent, previousCommentContent) {
+  return (dispatch) => {
+    dispatch(showLoading())
+    dispatch(editCommentById(id, commentContent))
+    return editComment(id, commentContent)
+      .then(() => {
+        dispatch(hideLoading())
+      }).catch(() => {
+        dispatch(editCommentById(id, previousCommentContent))
+        dispatch(hideLoading())
+      })
+  }
+}
+
 
 
 

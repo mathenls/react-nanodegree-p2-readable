@@ -50,7 +50,12 @@ const Post = (props) => {
                 <PostIcon type="like" theme="filled" onClick={() => handleUpvote(id)} />
                 <VoteScore>{voteScore}</VoteScore>
                 <PostIcon type="dislike" theme="filled" onClick={() => handleDownvote(id)}  />
-                <PostIcon type="message" /> {commentCount}
+                <PostIcon type="message"
+                    onClick={isDetails
+                        ? () => window.scrollTo(0,document.body.scrollHeight)
+                        : () => history.push(`/${post.category}/${post.id}`)}
+                />
+                {commentCount}
                 {isDetails && (
                     <>
                         <Button

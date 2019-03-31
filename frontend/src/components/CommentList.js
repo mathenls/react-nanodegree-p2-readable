@@ -16,6 +16,7 @@ const CommentList = (props) => (
                 comment={item}
                 handleUpVote={props.handleUpVote}
                 handleDownVote={props.handleDownVote}
+                history={props.history}
             />
         )}
     />

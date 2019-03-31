@@ -1,5 +1,5 @@
 import {
-   FETCH_POST_COMMENTS, DISMISS_COMMENTS, VOTE_ON_COMMENT, ADD_COMMENT, UNDO_ADD_COMMENT
+   FETCH_POST_COMMENTS, DISMISS_COMMENTS, VOTE_ON_COMMENT, ADD_COMMENT, UNDO_ADD_COMMENT, FETCH_COMMENT, EDIT_COMMENT, DISMISS_COMMENT
 } from '../actions/comments'
 
 export function comments(state = {}, action) {
@@ -19,6 +19,19 @@ export function comments(state = {}, action) {
             return [...state, {...action.comment, voteScore: 1, deleted: false, parentDeleted: false}]
         case UNDO_ADD_COMMENT:
             return state.filter(comment => comment.id !== action.id)
+        default:
+            return state
+    }
+}
+
+export function comment(state = {}, action) {
+    switch (action.type) {
+        case FETCH_COMMENT:
+            return { ...action.comment }
+        case EDIT_COMMENT:
+            return { ...state, ...action.commentContent}
+        case DISMISS_COMMENT:
+            return {}
         default:
             return state
     }

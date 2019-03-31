@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import CommentList from './CommentList'
 import { fetchPost, handleVoteOnPost, handlePostDeletion } from '../actions/posts'
-import { fetchPostComments, dismissComments, handleVoteOnComment } from '../actions/comments'
+import { dismissComments, handleVoteOnComment, handleFetchPostComments } from '../actions/comments'
 import Post from './Post'
 import AddCommentForm from './AddCommentForm';
 
@@ -20,7 +20,7 @@ class PostDetails extends Component {
     componentDidMount() {
         const { dispatch, match } = this.props
         dispatch(fetchPost(match.params.id))
-        dispatch(fetchPostComments(match.params.id))
+        dispatch(handleFetchPostComments(match.params.id))
     }
 
     componentWillUnmount() {
@@ -67,6 +67,7 @@ class PostDetails extends Component {
                         comments={comments}
                         handleUpVote={this.handleCommentUpVote}
                         handleDownVote={this.handleCommentDownVote}
+                        history={this.props.history}
                     />
                 }
                 <AddCommentForm />

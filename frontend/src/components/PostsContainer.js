@@ -63,6 +63,7 @@ class PostsContainer extends React.Component {
                             handleDownvote={this.handleDownvote}
                             handleUpvote={this.handleUpvote}
                             handleDeletePost={this.handleDeletePost}
+                            history={this.props.history}
                           />
                       </CenteredCol>
                   </CenteredRow>

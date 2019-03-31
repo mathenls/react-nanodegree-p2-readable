@@ -36,7 +36,6 @@ export async function deletePost(id) {
     })).json()
 }
 
-
 export async function saveVoteOnPost(id, option) {
     return (await fetch(`${localServerAddress}/posts/${id}`,{
         headers: headers,
@@ -82,6 +81,22 @@ export async function addCommentToPost(comment) {
         body: JSON.stringify({...comment})
     })).json()
 }
+
+export async function fetchComment (id) {
+    return (await fetch(`${localServerAddress}/comments/${id}`,{
+        headers: headers
+    })).json()
+}
+
+export async function editComment (id, commentContent) {
+    return (await fetch(`${localServerAddress}/comments/${id}`,{
+        headers: headers,
+        method: 'PUT',
+        body: JSON.stringify({...commentContent})
+    })).json()
+}
+
+
 
 
 

@@ -2,6 +2,8 @@ import {
     RECEIVE_POSTS, VOTE_ON_POST, FETCH_POST, DELETE_POST, UNDO_DELETE_POST, ADD_POST, UNDO_ADD_POST, EDIT_POST
 } from '../actions/posts'
 
+import { ADD_COMMENT, UNDO_ADD_COMMENT } from '../actions/comments'
+
 
 export function posts(state = [], action) {
     let postIndex = -1
@@ -48,6 +50,10 @@ export function post(state = {}, action) {
         case EDIT_POST: {
             return {...state, ...action.postContent}
         }
+        case ADD_COMMENT:
+            return {...state, commentCount: state.commentCount + 1}
+        case UNDO_ADD_COMMENT:
+            return {...state, commentCount: state.commentCount - 1}
         default:
             return state
     }
