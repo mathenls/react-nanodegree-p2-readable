@@ -67,3 +67,12 @@ export async function addNewPost(post) {
     })).json()
 }
 
+export async function editPost(id, postContent) {
+    return (await fetch(`${localServerAddress}/posts/${id}`,{
+        headers: headers,
+        method: 'PUT',
+        body: JSON.stringify({...postContent})
+    })).json()
+}
+
+

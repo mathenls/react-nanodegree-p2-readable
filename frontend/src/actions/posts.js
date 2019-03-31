@@ -1,4 +1,4 @@
-import { saveVoteOnPost, getPost, deletePost, addNewPost } from '../utils/api'
+import { saveVoteOnPost, getPost, deletePost, addNewPost, editPost } from '../utils/api'
 import { showLoading, hideLoading } from 'react-redux-loading'
 export const VOTE_ON_POST = 'VOTE_ON_POST'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
@@ -7,6 +7,7 @@ export const DELETE_POST = 'DELETE_POST'
 export const UNDO_DELETE_POST = 'UNDO_DELETE_POST'
 export const ADD_POST = 'ADD_POST'
 export const UNDO_ADD_POST = 'UNDO_ADD_POST'
+export const EDIT_POST = 'EDIT_POST'
 
 export function receivePosts (posts) {
   return {
@@ -54,7 +55,6 @@ export function undoAddPost (id) {
     id
   }
 }
-
 
 export function handleAddPost (post) {
   return (dispatch) => {
@@ -117,6 +117,27 @@ export function handlePostDeletion (id) {
         dispatch(undoDeletePost(id))
       })
   }
+}
+
+export function editPostById (id, postContent) {
+  return {
+    type: EDIT_POST,
+    id,
+    postContent
+  }
+}
+
+export function handleEditPost (id, postContent, previousPostContent) {
+    return (dispatch) => {
+      dispatch(showLoading())
+      dispatch(editPostById(id))
+      return editPost(id, postContent)
+        .then(() => {
+          dispatch(hideLoading())
+        }).catch(() => {
+          dispatch(editPost(id, previousPostContent))
+        })
+    }
 }
 
 

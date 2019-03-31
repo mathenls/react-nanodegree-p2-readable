@@ -1,5 +1,5 @@
 import {
-    RECEIVE_POSTS, VOTE_ON_POST, FETCH_POST, DELETE_POST, UNDO_DELETE_POST, ADD_POST, UNDO_ADD_POST
+    RECEIVE_POSTS, VOTE_ON_POST, FETCH_POST, DELETE_POST, UNDO_DELETE_POST, ADD_POST, UNDO_ADD_POST, EDIT_POST
 } from '../actions/posts'
 
 
@@ -44,6 +44,9 @@ export function post(state = {}, action) {
                 ...post,
                 voteScore: action.option === 'upVote' ? post.voteScore + 1 : post.voteScore - 1
             }
+        }
+        case EDIT_POST: {
+            return {...state, ...action.postContent}
         }
         default:
             return state

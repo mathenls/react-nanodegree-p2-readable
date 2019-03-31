@@ -28,7 +28,7 @@ const BodyContainer = styled.div`
     margin: 12px 12px 12px 0px;
 `
 const Post = (props) => {
-    const { post, handleUpvote, handleDownvote, handleDeletePost, isDetails } = props
+    const { post, handleUpvote, handleDownvote, handleDeletePost, isDetails, history } = props
     const { id, category, title, body, author, timestamp, commentCount, voteScore } = post
 
     return (
@@ -52,13 +52,22 @@ const Post = (props) => {
                 <PostIcon type="dislike" theme="filled" onClick={() => handleDownvote(id)}  />
                 <PostIcon type="message" /> {commentCount}
                 {isDetails && (
-                    <Button
-                        type="danger"
-                        style={{margin: '0 0 0 12px'}}
-                        shape="circle"
-                        icon="delete"
-                        onClick={() => handleDeletePost(id)}
-                    />
+                    <>
+                        <Button
+                            type="danger"
+                            style={{margin: '0 0 0 12px'}}
+                            shape="circle"
+                            icon="delete"
+                            onClick={() => handleDeletePost(id)}
+                        />
+                        <Button
+                            type="default"
+                            style={{margin: '0 0 0 12px'}}
+                            shape="circle"
+                            icon="edit"
+                            onClick={() => history.push(`/${post.category}/${post.id}/edit`)}
+                        />
+                    </>
                 )}
             </span>
         </PostCard>

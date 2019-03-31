@@ -84,9 +84,11 @@ class NewPostForm extends React.Component {
                 <FormCard>
                     <h2>New Post</h2>
                     <ErrorMessage>{error && `* ${error}`}</ErrorMessage>
+                    <h4>Title</h4>
                     <CenteredRow>
                         <Input placeholder="Type post's title..." onChange={this.handleTitleChange} />
                     </CenteredRow>
+                    <h4>Category</h4>
                     <CenteredRow>
                         <Select
                             showSearch
@@ -101,14 +103,16 @@ class NewPostForm extends React.Component {
                             ))}
                         </Select>
                     </CenteredRow>
+                    <h4>Author</h4>
                     <CenteredRow>
                         <Input placeholder="Type author's username..." onChange={this.handleAuthorChange} />
                     </CenteredRow>
+                    <h4>Content</h4>
                     <CenteredRow>
                         <Input.TextArea placeholder="Type post content..." onChange={this.handleBodyChange} />
                     </CenteredRow>
                     <CenteredRow>
-                        <Button type="primary" onClick={this.handlePostSubmit}>Submit</Button>
+                        <Button type="primary" icon="plus" onClick={this.handlePostSubmit}>Edit</Button>
                     </CenteredRow>
                 </FormCard>
             </Container>

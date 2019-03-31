@@ -58,6 +58,7 @@ class PostDetails extends Component {
                     handleUpvote={this.handlePostUpVote}
                     isDetails={true}
                     handleDeletePost={this.handleDeletePost}
+                    history={this.props.history}
                 />
                 <h2><b>Comments</b> ({comments.length})</h2>
                 {comments.length > 0 &&
