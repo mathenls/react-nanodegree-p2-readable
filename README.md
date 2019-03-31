@@ -1,22 +1,39 @@
-# Readable API Server
+# React Developer Nanodegree Project - Readable
 
-This is the starter project for the final assessment project for Udacity's Redux course where you will build a content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
+This project is the second project in Udacity's React Developer Nanodegree program, in the second module 'React and Redux'.
+The project is basically a content sharing and discussion forum similar to Reddit. A user can publish a post, comment in it, upvote, downvote, edit and delete them. Comments can be edited and deleted too. The posts are separated by categories returned by the API.
+The application in integrated with a local API that saves it's state based on the Authorization token sent, and has some default hardcoded initial data.
+In the front-end side, the application's state is controlled using Redux, and Redux Thunks to deal with async requests on the API. The actions and reducers are separated by context, like posts, categories and comments.
+It uses Ant Design as the main UI library, complemented with some styled components.
 
-This repository includes the code for the backend API Server that you'll use to develop and interact with the front-end portion of the project.
 
-## Start Developing
+## How to run
 
-To get started developing right away:
+To run this project, clone the repository and follow these simple steps:
 
 * Install and start the API server
     - `cd api-server`
-    - `npm install`
+    - `yarn install`
     - `node server`
-* In another terminal window, use Create React App to scaffold out the front-end
-    - `create-react-app frontend`
+* In another terminal window, to run the front-end application, run these commands:
     - `cd frontend`
-    - `npm start`
+    - `yarn install`
+    - `yarn start`
 
-## API Server
+## React
 
-Information about the API server and how to use it can be found in its [README file](api-server/README.md).
+* react@16.8.5
+* react-dom@16.8.5
+* react-redux@6.0.1
+* react-redux-loading@1.0.1
+* react-router-dom@5.0.0
+
+## External Libraries Used
+
+* redux@4.0.1
+* redux-thunk@2.3.0
+* styled-components@4.1.3
+* uuid@3.3.2
+* antd@3.15.1
+* lodash@4.17.11
+* moment@2.24.0
