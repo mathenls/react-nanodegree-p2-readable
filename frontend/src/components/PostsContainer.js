@@ -4,7 +4,7 @@ import { Radio, Button } from 'antd'
 import { handleVoteOnPost, handlePostDeletion } from '../actions/posts'
 import Post from './Post'
 import { orderBy } from 'lodash'
-import { Container, ActionsContainer, CenteredRow, CenteredCol, SpaceBetweenRow } from '../components/generalComponents'
+import { Container, ActionsContainer, CenteredRow, CenteredCol, SpaceBetweenRow } from './GeneralComponents'
 
 class PostsContainer extends React.Component {
 
@@ -70,7 +70,10 @@ class PostsContainer extends React.Component {
               ))}
             </>
           ) : (
-            <h2>No posts {match.params.category && `about ${match.params.category} `} yet. :(</h2>
+            <>
+                <Button onClick={() => this.props.history.push('/new-post')} style={{margin: '12px'}} icon="plus">New Post</Button>
+                <h2>No posts {match.params.category && `about ${match.params.category} `} yet. Publish the first one!</h2>
+            </>
           )}
           </Container>
         </>

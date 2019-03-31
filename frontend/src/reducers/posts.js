@@ -2,7 +2,7 @@ import {
     RECEIVE_POSTS, VOTE_ON_POST, FETCH_POST, DELETE_POST, UNDO_DELETE_POST, ADD_POST, UNDO_ADD_POST, EDIT_POST
 } from '../actions/posts'
 
-import { ADD_COMMENT, UNDO_ADD_COMMENT } from '../actions/comments'
+import { ADD_COMMENT, UNDO_ADD_COMMENT, DELETE_COMMENT, UNDO_DELETE_COMMENT } from '../actions/comments'
 
 
 export function posts(state = [], action) {
@@ -54,6 +54,10 @@ export function post(state = {}, action) {
             return {...state, commentCount: state.commentCount + 1}
         case UNDO_ADD_COMMENT:
             return {...state, commentCount: state.commentCount - 1}
+        case DELETE_COMMENT:
+            return {...state, commentCount: state.commentCount - 1}
+        case UNDO_DELETE_COMMENT:
+            return {...state, commentCount: state.commentCount + 1}
         default:
             return state
     }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Input, Select } from 'antd'
 import { connect } from 'react-redux'
-import { Container, CenteredRow, FormCard, ErrorMessage } from '../components/generalComponents'
+import { Container, CenteredRow, FormCard, ErrorMessage } from './GeneralComponents'
 import generateId from 'uuid/v4'
 import { handleAddPost } from  '../actions/posts'
 

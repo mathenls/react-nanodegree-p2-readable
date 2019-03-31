@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Input, Card } from 'antd'
 import { connect } from 'react-redux'
-import { Container, CenteredRow } from '../components/generalComponents'
+import { Container, CenteredRow } from './GeneralComponents'
 import styled from 'styled-components'
 import { handleFetchCommentById, handleEditComment, dismissComment } from '../actions/comments'
 import { defer } from 'lodash'

@@ -16,9 +16,14 @@ const TextLink = styled(Link)`
     cursor: pointer;
     color: black;
 `
+const DeleteText = styled.span`
+    padding: 0 0 0 8px;
+    cursor: pointer;
+    color: red;
+`
 
 const CommentCard = (props) => {
-    const { comment, handleUpVote, handleDownVote, history } = props
+    const { comment, handleUpVote, handleDownVote, handleDeleteComment, history } = props
     const { id, author, body, timestamp, voteScore } = comment
 
     const actions = [
@@ -44,16 +49,27 @@ const CommentCard = (props) => {
           </Tooltip>
         </span>,
         <span>
-            <Tooltip>
+            <Tooltip onClick={() => history.push(`/comments/${comment.id}/edit`)}>
                 <Icon
-                    title='Edit Post'
+                    title='Edit Comment'
                     type='edit'
                     theme='filled'
-                    onClick={() => history.push(`/comments/${comment.id}/edit`)}
                 />
-                <TextLink to={`/comments/${comment.id}/edit`}>
-                    Edit Post
+                <TextLink>
+                    Edit Comment
                 </TextLink>
+            </Tooltip>
+        </span>,
+        <span>
+            <Tooltip onClick={() => handleDeleteComment(comment.id)}>
+                <Icon
+                    title='Delete Comment'
+                    type='delete'
+                    theme='filled'
+                />
+                <DeleteText>
+                    Delete Comment
+                </DeleteText>
             </Tooltip>
         </span>
       ]

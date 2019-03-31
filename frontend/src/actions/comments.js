@@ -1,4 +1,4 @@
-import { getPostComments, saveVoteOnComments, addCommentToPost, fetchComment, editComment } from '../utils/api'
+import { getPostComments, saveVoteOnComments, addCommentToPost, fetchComment, editComment, deleteComment } from '../utils/api'
 import { showLoading, hideLoading } from 'react-redux-loading'
 
 export const FETCH_POST_COMMENTS = 'FETCH_POST_COMMENTS'
@@ -9,7 +9,8 @@ export const ADD_COMMENT = 'ADD_COMMENT'
 export const UNDO_ADD_COMMENT = 'UNDO_ADD_COMMENT'
 export const FETCH_COMMENT = 'FETCH_COMMENT'
 export const EDIT_COMMENT = 'EDIT_COMMENT'
-
+export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const UNDO_DELETE_COMMENT = 'UNDO_DELETE_COMMENT'
 
 export function fetchPostComments (comments) {
   return {
@@ -141,6 +142,35 @@ export function handleEditComment (id, commentContent, previousCommentContent) {
       })
   }
 }
+
+export function deleteCommentById (id) {
+  return {
+    type: DELETE_COMMENT,
+    id
+  }
+}
+
+export function undoDeleteComment (id) {
+  return {
+    type: UNDO_DELETE_COMMENT,
+    id
+  }
+}
+
+export function handleDeleteComment (id) {
+  return (dispatch) => {
+    dispatch(showLoading())
+    dispatch(deleteCommentById(id))
+    return deleteComment(id)
+      .then(() => {
+        dispatch(hideLoading())
+      }).catch(() => {
+        dispatch(undoDeleteComment(id))
+        dispatch(hideLoading())
+      })
+  }
+}
+
 
 
 

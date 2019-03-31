@@ -96,6 +96,13 @@ export async function editComment (id, commentContent) {
     })).json()
 }
 
+export async function deleteComment (id) {
+    return (await fetch(`${localServerAddress}/comments/${id}`, {
+        headers: headers,
+        method: 'DELETE'
+    })).json()
+}
+
 
 
 
