@@ -1,23 +1,11 @@
 import React from 'react'
-import { Button, Input, Select, Card } from 'antd'
+import { Button, Input, Select } from 'antd'
 import { connect } from 'react-redux'
-import { Container, CenteredRow } from '../components/generalComponents'
-import styled from 'styled-components'
+import { Container, CenteredRow, FormCard, ErrorMessage } from '../components/generalComponents'
 import generateId from 'uuid/v4'
 import { handleAddPost } from  '../actions/posts'
 
 const Option = Select.Option
-
-const FormCard = styled(Card)`
-    background-color: #FEFEFE;
-    margin: 24px;
-    width: 50%;
-    box-shadow: 0 0 10px 2px rgba(0,0,0,0.18) !important;
-`
-const ErrorMessage = styled.h3`
-    color: red;
-    font-weight: bold;
-`
 
 class NewPostForm extends React.Component {
     state = {
@@ -112,7 +100,7 @@ class NewPostForm extends React.Component {
                         <Input.TextArea placeholder="Type post content..." onChange={this.handleBodyChange} />
                     </CenteredRow>
                     <CenteredRow>
-                        <Button type="primary" icon="plus" onClick={this.handlePostSubmit}>Edit</Button>
+                        <Button type="primary" icon="plus" onClick={this.handlePostSubmit}>Publish</Button>
                     </CenteredRow>
                 </FormCard>
             </Container>

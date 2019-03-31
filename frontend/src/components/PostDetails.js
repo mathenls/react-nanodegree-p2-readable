@@ -5,6 +5,7 @@ import CommentList from './CommentList'
 import { fetchPost, handleVoteOnPost, handlePostDeletion } from '../actions/posts'
 import { fetchPostComments, dismissComments, handleVoteOnComment } from '../actions/comments'
 import Post from './Post'
+import AddCommentForm from './AddCommentForm';
 
 const Container = styled.div`
     padding: 24px;
@@ -68,6 +69,7 @@ class PostDetails extends Component {
                         handleDownVote={this.handleCommentDownVote}
                     />
                 }
+                <AddCommentForm />
             </Container>
         )
     }

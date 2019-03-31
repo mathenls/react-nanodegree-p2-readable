@@ -65,6 +65,7 @@ export function handleAddPost (post) {
         dispatch(hideLoading())
       }).catch(() => {
         dispatch(undoAddPost(post.id))
+        dispatch(hideLoading())
       })
   }
 }
@@ -102,7 +103,8 @@ export function handleVoteOnPost (id, option) {
             console.log('Error on votePost')
             break
         }
-      })
+        dispatch(hideLoading())
+    })
   }
 }
 
@@ -115,6 +117,7 @@ export function handlePostDeletion (id) {
         dispatch(hideLoading())
       }).catch(() => {
         dispatch(undoDeletePost(id))
+        dispatch(hideLoading())
       })
   }
 }
@@ -136,6 +139,7 @@ export function handleEditPost (id, postContent, previousPostContent) {
           dispatch(hideLoading())
         }).catch(() => {
           dispatch(editPost(id, previousPostContent))
+          dispatch(hideLoading())
         })
     }
 }

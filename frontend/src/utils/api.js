@@ -75,4 +75,13 @@ export async function editPost(id, postContent) {
     })).json()
 }
 
+export async function addCommentToPost(comment) {
+    return (await fetch(`${localServerAddress}/comments`,{
+        headers: headers,
+        method: 'POST',
+        body: JSON.stringify({...comment})
+    })).json()
+}
+
+
 

@@ -106,7 +106,7 @@ class EditPostForm extends React.Component {
                             <Input.TextArea defaultValue={post.body} placeholder="Type post content..." onChange={this.handleBodyChange} />
                         </CenteredRow>
                         <CenteredRow>
-                            <Button type="primary" icon="edit" onClick={this.handlePostEditSubmit}>Submit</Button>
+                            <Button type="primary" icon="edit" onClick={this.handlePostEditSubmit}>Save</Button>
                         </CenteredRow>
                     </FormCard>
                 </Container>

@@ -45,18 +45,18 @@ class PostsContainer extends React.Component {
         <Container>
           {posts.length > 0 ? (
             <>
-							<ActionsContainer>
-								<SpaceBetweenRow>
-										<span>Order Posts By: </span>
-										<Radio.Group value={orderParam} onChange={this.handleOrderParamChange}>
-											<Radio.Button value="timestamp">Posted Date</Radio.Button>
-											<Radio.Button value="voteScore">Vote Score</Radio.Button>
-										</Radio.Group>
-								</SpaceBetweenRow>
-								<Button onClick={() => this.props.history.push('/new-post')} style={{margin: '12px'}} icon="plus">New Post</Button>
-							</ActionsContainer>
+            <ActionsContainer>
+                <SpaceBetweenRow>
+                        <span>Order Posts By: </span>
+                        <Radio.Group value={orderParam} onChange={this.handleOrderParamChange}>
+                            <Radio.Button value="timestamp">Posted Date</Radio.Button>
+                            <Radio.Button value="voteScore">Vote Score</Radio.Button>
+                        </Radio.Group>
+                </SpaceBetweenRow>
+                <Button onClick={() => this.props.history.push('/new-post')} style={{margin: '12px'}} icon="plus">New Post</Button>
+            </ActionsContainer>
               {posts.map((post) => (
-                  <CenteredRow gutter={24}>
+                  <CenteredRow key={post.id} gutter={24}>
                       <CenteredCol span={24}>
                           <Post
                             post={post}

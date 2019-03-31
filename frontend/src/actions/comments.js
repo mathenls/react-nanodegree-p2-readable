@@ -1,8 +1,10 @@
-import { getPostComments, saveVoteOnComments } from '../utils/api'
+import { getPostComments, saveVoteOnComments, addCommentToPost } from '../utils/api'
 import { showLoading, hideLoading } from 'react-redux-loading'
 export const FETCH_POST_COMMENTS = 'FETCH_POST_COMMENTS'
 export const DISMISS_COMMENTS = 'DISMISS_COMMENTS'
 export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT'
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const UNDO_ADD_COMMENT = 'UNDO_ADD_COMMENT'
 
 export function handleFetchPostComments (comments) {
   return {
@@ -16,7 +18,7 @@ export function dismissComments () {
         type: DISMISS_COMMENTS,
     }
 }
-  
+
 export function fetchPostComments (parentId) {
   return (dispatch) => {
     dispatch(showLoading())
@@ -55,7 +57,35 @@ export function handleVoteOnComment (id, option) {
             console.log('Error on votePost')
             break
         }
+        dispatch(hideLoading())
       })
+  }
+}
+
+export function addComment (comment) {
+  return {
+    type: ADD_COMMENT,
+    comment
+  }
+}
+
+export function undoAddComment (id) {
+  return {
+    type: UNDO_ADD_COMMENT,
+    id
+  }
+}
+
+export function handleAddComment (comment) {
+  return (dispatch) => {
+    dispatch(showLoading())
+    dispatch(addComment(comment))
+    return addCommentToPost(comment).then(() => {
+      dispatch(hideLoading())
+    }).catch(() => {
+      dispatch(undoAddComment(comment.id))
+      dispatch(hideLoading())
+    })
   }
 }
 

@@ -1,4 +1,4 @@
-import { Row, Col } from 'antd'
+import { Row, Col, Card } from 'antd'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -31,3 +31,14 @@ export const SpaceBetweenRow = styled(Row)`
 	justify-content: space-between;
 	overflow: hidden;
 `
+export const FormCard = styled(Card)`
+    background-color: #FEFEFE;
+    margin: 24px;
+    width: 50%;
+    box-shadow: 0 0 10px 2px rgba(0,0,0,0.18) !important;
+`
+export const ErrorMessage = styled.h3`
+    color: red;
+    font-weight: bold;
+`
+
