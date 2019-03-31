@@ -7,10 +7,12 @@ class Nav extends React.Component {
   render()  {
       const { categories } = this.props
       const { listOfCategories } = categories
+      const category = document.URL.split('/')[3] ? document.URL.split('/')[3] : '/'
 
       return (
         <Menu
             mode="horizontal"
+            defaultSelectedKeys={[category]}
         >
             <Menu.Item key='/'>
                 <NavLink to='/' exact activeClassName='active'>
