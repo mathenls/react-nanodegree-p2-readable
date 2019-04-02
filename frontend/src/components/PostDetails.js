@@ -19,13 +19,15 @@ const Container = styled.div`
 class PostDetails extends Component {
 
     componentDidMount() {
-        const { dispatch, match } = this.props
-        dispatch(fetchPost(match.params.id))
-        dispatch(handleFetchPostComments(match.params.id))
+        const { match, fetchPostContent, fetchPostComments } = this.props
+        const id = match.params.id
+
+        fetchPostContent(id)
+        fetchPostComments(id)
     }
 
     componentWillUnmount() {
-        this.props.dispatch(dismissComments())
+        this.props.dismissAllComments()
     }
 
     componentWillReceiveProps() {
@@ -38,28 +40,29 @@ class PostDetails extends Component {
     }
 
     handlePostUpVote = (id) => {
-        this.props.dispatch(handleVoteOnPost(id, 'upVote'))
+        this.props.voteOnPost(id, 'upVote')
     }
 
     handlePostDownVote = (id) => {
-      this.props.dispatch(handleVoteOnPost(id, 'downVote'))
+        this.props.voteOnPost(id, 'downVote')
     }
 
     handleCommentUpVote = (id) => {
-        this.props.dispatch(handleVoteOnComment(id, 'upVote'))
+        this.props.voteOnComment(id, 'upVote')
     }
 
     handleCommentDownVote = (id) => {
-      this.props.dispatch(handleVoteOnComment(id, 'downVote'))
+        this.props.voteOnComment(id, 'downVote')
     }
 
     handleDeletePost = (id) => {
-        this.props.dispatch(handlePostDeletion(id))
-        this.props.history.push(`/${this.props.match.params.category}`)
+        const { deletePostById, history, match } = this.props
+        deletePostById(id)
+        history.push(`/${match.params.category}`)
     }
 
     handleDeleteComment = (id) => {
-        this.props.dispatch(handleDeleteComment(id))
+        this.props.deleteCommentById(id)
     }
 
     render() {
@@ -104,4 +107,28 @@ function mapStateToProps ({ post, comments }) {
     }
 }
 
-export default connect(mapStateToProps)(PostDetails)
+const mapDispatchToProps = (dispatch) => ({
+    fetchPostContent: (id) => {
+        dispatch(fetchPost(id))
+    },
+    fetchPostComments: (id) => {
+        dispatch(handleFetchPostComments(id))
+    },
+    voteOnPost: (id, option) => {
+        dispatch(handleVoteOnPost(id, option))
+    },
+    dismissAllComments: () => {
+        dispatch(dismissComments())
+    },
+    voteOnComment: (id, option) => {
+        dispatch(handleVoteOnComment(id, option))
+    },
+    deletePostById: (id) => {
+        dispatch(handlePostDeletion(id))
+    },
+    deleteCommentById: (id) => {
+        dispatch(handleDeleteComment(id))
+    },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostDetails)

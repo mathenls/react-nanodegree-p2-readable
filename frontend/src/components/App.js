@@ -13,7 +13,7 @@ import NotFound from './404'
 
 class App extends Component {
   componentDidMount() {
-    this.props.dispatch(handleInitialData())
+    this.props.getInitialData()
   }
 
   render() {
@@ -50,4 +50,11 @@ function mapStateToProps ({ categories }) {
   }
 }
 
-export default connect(mapStateToProps)(App)
+const mapDispatchToProps = (dispatch) => ({
+  getInitialData: () => {
+    dispatch(handleInitialData())
+  },
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -26,7 +26,7 @@ class AddCommentForm extends React.Component {
 
     handleCommentSubmit = () => {
         const { author, body } = this.state
-        const { post } = this.props
+        const { post, addComment } = this.props
 
         if (!author || !body) {
             this.setState({
@@ -40,7 +40,7 @@ class AddCommentForm extends React.Component {
                 body,
                 parentId: post.id
             }
-            this.props.dispatch(handleAddComment(commentBody))
+            addComment(commentBody)
         }
     }
 
@@ -75,4 +75,10 @@ const mapStateToProps = ({post}) => {
     }
 }
 
-export default connect(mapStateToProps)(AddCommentForm)
+const mapDispatchToProps = (dispatch) => ({
+    addComment: (commentBody) => {
+      dispatch(handleAddComment(commentBody))
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddCommentForm)

@@ -6,7 +6,6 @@ import { Menu, Icon } from 'antd'
 class Nav extends React.Component {
   render()  {
       const { categories } = this.props
-      const { listOfCategories } = categories
       const category = document.URL.split('/')[3] ? document.URL.split('/')[3] : '/'
 
       return (
@@ -19,7 +18,7 @@ class Nav extends React.Component {
                    <Icon type='home' /> Readable
                 </NavLink>
             </Menu.Item>
-            {listOfCategories.map((c) => (
+            {categories.map((c) => (
                 <Menu.Item key={c.path}>
                     <NavLink to={`/${c.path}`} exact activeClassName='active'>
                         {c.name}

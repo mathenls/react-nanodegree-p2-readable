@@ -42,6 +42,8 @@ class NewPostForm extends React.Component {
 
     handlePostSubmit = () => {
         const { title, author, body, category } = this.state
+        const { history, addPost } = this.props
+
         if (!author || !body || !category || !title) {
             this.setState({
                 error: 'Please, fill all fields.'
@@ -58,8 +60,8 @@ class NewPostForm extends React.Component {
                 commentCount: 0,
                 deleted: false
             }
-            this.props.dispatch(handleAddPost(postBody))
-            this.props.history.push(`/${category}`)
+            addPost(postBody)
+            history.push(`/${category}`)
         }
     }
 
@@ -86,7 +88,7 @@ class NewPostForm extends React.Component {
                             onChange={this.handleCategoryChange}
                             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                         >
-                            {categories.listOfCategories.map((c) => (
+                            {categories.map((c) => (
                                 <Option key={c.name} value={c.name}>{c.name}</Option>
                             ))}
                         </Select>
@@ -116,4 +118,10 @@ const mapStateToProps = ({categories}) => {
     }
 }
 
-export default connect(mapStateToProps)(NewPostForm)
+const mapDispatchToProps = (dispatch) => ({
+    addPost: (postBody) => {
+        dispatch(handleAddPost(postBody))
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewPostForm)

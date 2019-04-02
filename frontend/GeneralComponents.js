@@ -21,9 +21,9 @@ export const CenteredCol= styled(Col)`
     justify-content: center;
 `
 export const ActionsContainer = styled(Col)`
-		justify-content: space-between;
-		flex-direction: row;
-		width: 50%;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 50%;
 `
 export const SpaceBetweenRow = styled(Row)`
 	margin: 16px 8px 16px 16px;

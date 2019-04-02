@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Container, CenteredRow } from './GeneralComponents'
 import styled from 'styled-components'
 import { handleEditPost, fetchPost } from  '../actions/posts'
+import { defer } from 'lodash'
 
 const Option = Select.Option
 
@@ -26,20 +27,22 @@ class EditPostForm extends React.Component {
     }
 
     componentDidMount() {
-        const { dispatch, match } = this.props
-        dispatch(fetchPost(match.params.id))
+        const { fetchPostContent, match } = this.props
+        fetchPostContent(match.params.id)
     }
 
     componentWillReceiveProps() {
-        if (this.props.post) {
-            const { title, body } = this.props.post
-            this.setState({
-                title,
-                body
-            }, () => {
-                this.forceUpdate()
-            })
-        }
+        defer(() => {
+            if (this.props.post) {
+                const { title, body } = this.props.post
+                this.setState({
+                    title,
+                    body
+                }, () => {
+                    this.forceUpdate()
+                })
+            }
+        })
     }
 
     handleBodyChange = (e) => {
@@ -55,7 +58,7 @@ class EditPostForm extends React.Component {
     }
 
     handlePostEditSubmit = () => {
-        const { post } = this.props
+        const { post, editPostContent } = this.props
         const { title, body } = this.state
         if (!body || !title) {
             this.setState({
@@ -64,9 +67,9 @@ class EditPostForm extends React.Component {
         } else {
             const postContent = {
                 body,
-                title,
+                title
             }
-            this.props.dispatch(handleEditPost(post.id, postContent, {title: post.title, body: post.body}))
+            editPostContent(post, postContent)
             this.props.history.push(`/${post.category}/${post.id}`)
         }
     }
@@ -92,7 +95,7 @@ class EditPostForm extends React.Component {
                                 disabled={true}
                                 defaultValue={post.category}
                             >
-                                {categories.listOfCategories.map((c) => (
+                                {categories.map((c) => (
                                     <Option key={c.name} value={c.name}>{c.name}</Option>
                                 ))}
                             </Select>
@@ -122,4 +125,14 @@ const mapStateToProps = ({ post, categories }) => {
     }
 }
 
-export default connect(mapStateToProps)(EditPostForm)
+const mapDispatchToProps = (dispatch) => ({
+    fetchPostContent: (id) => {
+        dispatch(fetchPost(id))
+    },
+    editPostContent: (post, postContent) => {
+        const { id, title, body} = post
+        dispatch(handleEditPost(id, postContent, {title, body}))
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditPostForm)

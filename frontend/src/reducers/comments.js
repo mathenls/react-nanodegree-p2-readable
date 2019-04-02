@@ -11,32 +11,49 @@ import {
    UNDO_DELETE_COMMENT
 } from '../actions/comments'
 
-export function comments(state = {}, action) {
-    let commentIndex
-    if ('id' in action) {
-        commentIndex = state.findIndex(comment => comment.id === action.id)
-    }
+export function comments(state = [], action) {
     switch (action.type) {
         case FETCH_POST_COMMENTS:
             return [...action.comments]
         case DISMISS_COMMENTS:
             return []
         case VOTE_ON_COMMENT:
-            const voteScore = state[commentIndex].voteScore
-            state[commentIndex].voteScore = action.option === 'upVote'
-                ? voteScore + 1
-                : voteScore - 1
-            return [...state]
+            return state.map(comment => {
+                const { id, voteScore } = comment
+                if (id === action.id) {
+                    return {
+                        ...comment,
+                        voteScore: action.option === 'upVote'
+                            ? voteScore + 1
+                            : voteScore - 1
+                    }
+                }
+                return comment
+            })
         case ADD_COMMENT:
             return [...state, {...action.comment, voteScore: 1, deleted: false, parentDeleted: false}]
         case UNDO_ADD_COMMENT:
             return state.filter(comment => comment.id !== action.id)
         case DELETE_COMMENT:
-            state[commentIndex].deleted = true
-            return [...state]
+            return state.map(comment => {
+                if (comment.id === action.id) {
+                    return {
+                        ...comment,
+                        deleted: true
+                    }
+                }
+                return comment
+            })
         case UNDO_DELETE_COMMENT:
-            state[commentIndex].deleted = false
-            return [...state]
+            return state.map(comment => {
+                if (comment.id === action.id) {
+                    return {
+                        ...comment,
+                        deleted: false
+                    }
+                }
+                return comment
+            })
         default:
             return state
     }

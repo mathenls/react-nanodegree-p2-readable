@@ -25,12 +25,12 @@ class EditCommentForm extends React.Component {
     }
 
     componentDidMount() {
-        const { dispatch, match } = this.props
-        dispatch(handleFetchCommentById(match.params.id))
+        const { fetchCommentById, match } = this.props
+        fetchCommentById(match.params.id)
     }
 
     componentWillUnmount() {
-        this.props.dispatch(dismissComment())
+        this.props.dismissLoadedComment()
     }
 
     componentWillReceiveProps() {
@@ -54,7 +54,7 @@ class EditCommentForm extends React.Component {
     }
 
     handleCommentEditSubmit = () => {
-        const { comment } = this.props
+        const { comment, editCommentContent } = this.props
         const { body } = this.state
 
         if (!body) {
@@ -66,7 +66,7 @@ class EditCommentForm extends React.Component {
                 timestamp: Date.now(),
                 body
             }
-            this.props.dispatch(handleEditComment(comment.id, commentContent, { body: comment.body}))
+            editCommentContent(commentContent, comment)
             this.props.history.goBack()
         }
     }
@@ -105,4 +105,17 @@ const mapStateToProps = ({ comment }) => {
     }
 }
 
-export default connect(mapStateToProps)(EditCommentForm)
+const mapDispatchToProps = (dispatch) => ({
+    editCommentContent: (editedContent, comment) => {
+      const { id, body } = comment
+      dispatch(handleEditComment(id, editedContent, { body }))
+    },
+    fetchCommentById: (id) => {
+        dispatch(handleFetchCommentById(id))
+    },
+    dismissLoadedComment: () => {
+        dispatch(dismissComment())
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditCommentForm)

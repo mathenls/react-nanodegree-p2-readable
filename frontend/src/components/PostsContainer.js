@@ -13,15 +13,15 @@ class PostsContainer extends React.Component {
   }
 
   handleUpvote = (id) => {
-      this.props.dispatch(handleVoteOnPost(id, 'upVote'))
+    this.props.voteOnPost(id, 'upVote')
   }
 
   handleDownvote = (id) => {
-    this.props.dispatch(handleVoteOnPost(id, 'downVote'))
+    this.props.voteOnPost(id, 'downVote')
   }
 
   handleDeletePost = (id) => {
-    this.props.dispatch(handlePostDeletion(id))
+    this.props.deletePostById(id)
   }
 
   handleOrderParamChange = (e) => {
@@ -86,5 +86,14 @@ function mapStateToProps ({ posts }) {
     }
 }
 
-export default connect(mapStateToProps)(PostsContainer)
+const mapDispatchToProps = (dispatch) => ({
+    voteOnPost: (id, option) => {
+        dispatch(handleVoteOnPost(id, option))
+    },
+    deletePostById: (id) => {
+        dispatch(handlePostDeletion(id))
+    },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostsContainer)
 
