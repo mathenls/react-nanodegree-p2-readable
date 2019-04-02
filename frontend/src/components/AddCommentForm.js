@@ -41,11 +41,20 @@ class AddCommentForm extends React.Component {
                 parentId: post.id
             }
             addComment(commentBody)
+            this.clearFormState()
         }
     }
 
+    clearFormState = () => {
+        this.setState({
+            author: '',
+            body: '',
+            error: ''
+        })
+    }
+
     render() {
-        const { error } = this.state
+        const { error, author, body } = this.state
 
         return (
             <Container>
@@ -54,11 +63,11 @@ class AddCommentForm extends React.Component {
                     <ErrorMessage>{error && `* ${error}`}</ErrorMessage>
                     <h4>Author</h4>
                     <CenteredRow>
-                        <Input placeholder="Type author's username..." onChange={this.handleAuthorChange} />
+                        <Input value={author} placeholder="Type author's username..." onChange={this.handleAuthorChange} />
                     </CenteredRow>
                     <h4>Comment</h4>
                     <CenteredRow>
-                        <Input.TextArea placeholder="Type your comment..." onChange={this.handleBodyChange} />
+                        <Input.TextArea value={body} placeholder="Type your comment..." onChange={this.handleBodyChange} />
                     </CenteredRow>
                     <CenteredRow>
                         <Button type="primary" icon="plus" onClick={this.handleCommentSubmit}>Publish Comment</Button>
